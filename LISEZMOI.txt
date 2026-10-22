@@ -1,0 +1,6 @@
+1. Crée un compte sur github.com, puis un dépôt PUBLIC (ex: cinefilms-tv).
+2. Uploade TOUT le contenu du projet (dossier .github inclus) : "Add file" > "Upload files".
+3. Onglet "Actions" : la compilation démarre seule (3-5 min). Attends la coche verte.
+4. Onglet "Releases" : tu y trouves tv.apk.
+Lien direct fixe :
+https://github.com/TON_PSEUDO/TON_DEPOT/releases/latest/download/tv.apk
