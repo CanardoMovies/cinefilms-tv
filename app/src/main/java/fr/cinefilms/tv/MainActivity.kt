@@ -18,6 +18,7 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
+import android.widget.Toast
 
 class MainActivity : Activity() {
 
@@ -29,6 +30,7 @@ class MainActivity : Activity() {
     private var customView: View? = null
     private var customCb: WebChromeClient.CustomViewCallback? = null
     private val handler = Handler(Looper.getMainLooper())
+    private var lastBack = 0L
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -100,6 +102,16 @@ class MainActivity : Activity() {
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (customView != null) { exitCustomView(); return true }
+            // Écran du code : un seul « Retour » ne quitte pas (le code serait perdu)
+            if ((web.url ?: "").contains("tv_code")) {
+                val now = System.currentTimeMillis()
+                if (now - lastBack > 2500) {
+                    lastBack = now
+                    Toast.makeText(this, "Appuie encore sur Retour pour quitter", Toast.LENGTH_SHORT).show()
+                    return true
+                }
+                return super.onKeyDown(keyCode, event)
+            }
             if (web.canGoBack()) { web.goBack(); return true }
         }
         return super.onKeyDown(keyCode, event)
